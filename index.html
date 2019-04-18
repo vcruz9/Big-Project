@@ -3,26 +3,32 @@
 <head> 
 	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 	<link rel="stylesheet" type="text/css" href="styles.css">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 </head>
 
-     <style>
-	 body {
-	 background-color: #white;
-	 margin: 0px;
+<style>
+.pictures, .content{
+			display: none;
+		}
+	body {
+		background-color: #black;
+		margin: 0px;
+		padding-bottom: 70px;
 	 }
 	 
 	 
-	 ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-}
+	ul {
+		list-style-type: none;
+		margin: 0;
+		padding: 0;
+	}
 
-	 nav {
-	 background-color: #a29cd9;
+	nav {
+		background-color: #a29cd9;
 	 }
+	 
 	 nav.bot{
 	 position: fixed;
 	 bottom: 0;
@@ -30,7 +36,36 @@
 	 }
 	#navfooter li{
 		display: inline !important;
+		float: left;
+		width: 25%;
+		text-align: center;
+		padding: 3px 0 0 0;
+		transition: all 0.3s ease;
+		font-size: 50px;
+		text-decoration: none;
 			}
+	#navfooter a {
+	color: black;
+	}
+	#navfooter li:hover {
+	background-color: red;
+	}
+	.active {
+		background-color: #a6edbe;
+	}
+	#navfooter a span{
+		color:black;
+		font-size:20px;
+		padding:5px 0 5px 0;
+		display:block;
+		text-transform:none;
+		font-family:'Comic Sans MS';
+		letter-spacing:1px;
+	}
+
+
+	
+
          #pic{
              width: 50%;
              margin: 20px;
@@ -51,16 +86,31 @@
 			  font-size: 18px; 
 			  line-height: 25px;
 			  font-family: Comic Sans MS;
-}
-.icon-dog:before {
-	color: #0000ff;
-	font-size: 100px;
-}
+			}
+	@media only screen and (max-width: 600px) {
+		#navfooter a span{
+		font-size:16px;
+		}
+	}
      </style>
  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
  <script>
 
 $(document).ready(function(){
+	$("#home").show();
+	
+	 function hideScreens() {
+          $(".content").hide();
+    }
+	$(".nav-link").on("click", function(){
+          hideScreens();
+          var target = $(this).attr("href");
+          $(target).show();
+    });
+	
+     
+	$("#search").on("click", function() {
+	// $("#dogs").empty();  no content for dog yet
 
 var images={};
 var corsAnywhere = 'https://cors-anywhere.herokuapp.com/';
@@ -92,6 +142,7 @@ images=data;
   });
    },0);
 });
+});
  </script>
     
  <body>
@@ -105,21 +156,30 @@ images=data;
 
  <!-- NavBarBottom-->
     <nav class="bot">
-	  <div class="container-fluid">
-
         <div class="navbar" id="navbarNav">
             <ul class="navbar-nav" id="navfooter">
-                <li class="active"><a href="#">Home</a></li>
-						<li><a href="#">Page 1</a></li>
-						<li><a href="#">Page 2</a></li>
-						<li><a href="#">Page 3</a></li>
+                <li class="active"><a href="#home"><i class="fas fa-home"><span> Home</span> </i></a></li>
+						<li><a class= "nav-link" href="#dogs"><i class="fas fa-dog"> <span> Doggos </span> </i></a></li>
+						<li><a class= "nav-link" href="#cats"><i class="fas fa-cat"> <span> Cats </span> </i></a></li>
+						<li><a class= "nav-link" href="#camera"><i class="fas fa-camera"> <span> Camera </span> </i></a></li>
                 </li>
             </ul>
         </div>
-		</div>
     </nav>
+
 	
+     <div class= "pictures" id="emoji"></div>
+	 
+	   <div class="content" align="center" id="home">
+	        <button style="margin-top: 25px;"id="search" class="btn btn-primary btn-xl text-uppercase">Search</button>
+	</div>
 	
-     <div class= "row text-center" id="emoji"></div>
+	<div class= "content" id="dogs"> 
+	<h1> Oh hey there bark bark </h1>
+	</div>
+	
+	<div class= "content" id="cats"> 
+	<h1> Oh hey there meow meow </h1>
+	</div>
  </body>
 </html>
