@@ -2,6 +2,7 @@
 <html>
 <head> 
 	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<meta name="theme-color" content="#a29cd9" />
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -13,7 +14,7 @@
 			display: none;
 		}
 	body {
-		background-color: #black;
+		background-color: ffff7f;
 		margin: 0px;
 		padding-bottom: 70px;
 	 }
@@ -26,7 +27,7 @@
 	}
 
 	nav {
-		background-color: #a29cd9;
+		background-color: #ffff30;
 	 }
 	 
 	 nav.bot{
@@ -48,7 +49,7 @@
 	color: black;
 	}
 	#navfooter li:hover {
-	background-color: red;
+	background-color: #ffff30;
 	}
 	.active {
 		background-color: #a6edbe;
@@ -75,7 +76,7 @@
          }
 		 .header {
 		   overflow: hidden;
-			background-color: #a29cd9;
+			background-color: #df6300;
 			<!--padding: 20px 10px;-->
 			}
 			.header p {
@@ -94,6 +95,7 @@
 	}
      </style>
  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+ 
  <script>
 
 $(document).ready(function(){
@@ -122,14 +124,14 @@ images=data;
     var ele = document.createElement("span");
     var img = document.createElement("img");
     img.setAttribute("src", data[key]);
-    img.setAttribute("class", "col-md-6");
+  //  img.setAttribute("class", "col-md-6");
     img.setAttribute("id", "pic");
     ele.appendChild(img);
-    var elem=document.getElementById('emoji').appendChild(ele);
+    var elem=document.getElementById('dogs').appendChild(ele);
   });
 })
 .catch(err => console.error(err));
-    $('#emoji').empty();
+    $("#dogs").empty();
     setTimeout(function(){
      Object.keys(images).forEach((key) => {
      if(images[key].indexOf(searchTxt)!=-1){
@@ -137,14 +139,63 @@ images=data;
         var img = document.createElement("img");
         img.setAttribute("src", images[key]);
         ele.appendChild(img);
-        var elem=document.getElementById('emoji').appendChild(ele);
+        var elem=document.getElementById('dogs').appendChild(ele);
      }
   });
    },0);
 });
 });
  </script>
-    
+   <!--CatScript-->
+   <script>
+   $(document).ready(function(){
+	$("#home").show();
+	
+	 function hideScreens() {
+          $(".content").hide();
+    }
+	$(".nav-link").on("click", function(){
+          hideScreens();
+          var target = $(this).attr("href");
+          $(target).show();
+    });
+	$("#search2").on("click", function() {
+		console.log("Search 2 was Clicked");
+	// $("#dogs").empty();  no content for dog yet
+
+var images={};
+var corsAnywhere = 'https://cors-anywhere.herokuapp.com/';
+fetch( corsAnywhere + 'http://shibe.online/api/cats?count=6&urls=true&httpsUrls=true')
+.then(response => response.json())
+.then(data => {
+images=data;
+  Object.keys(data).forEach((key) => {
+    var ele = document.createElement("span");
+    var img = document.createElement("img");
+    img.setAttribute("src", data[key]);
+  //  img.setAttribute("class", "col-md-6");
+    img.setAttribute("id", "pic");
+    ele.appendChild(img);
+    var elem = document.getElementById('cats').appendChild(ele);
+  });
+})
+.catch(err => console.error(err));
+    $("#cats").empty();
+    setTimeout(function(){
+     Object.keys(images).forEach((key) => {
+     if(images[key].indexOf(searchTxt)!=-1){
+        var ele = document.createElement("span");
+        var img = document.createElement("img");
+        img.setAttribute("src", images[key]);
+        ele.appendChild(img);
+        var elem=document.getElementById('cats').appendChild(ele);
+     }
+  });
+   },0);
+});
+});
+</script>
+
  <body>
  <!--NavBarTop-->
 	<div class="header">
@@ -158,7 +209,7 @@ images=data;
     <nav class="bot">
         <div class="navbar" id="navbarNav">
             <ul class="navbar-nav" id="navfooter">
-                <li class="active"><a href="#home"><i class="fas fa-home"><span> Home</span> </i></a></li>
+                <li class="active"><a class= "nav-link" href="#home"><i class="fas fa-home"><span> Home</span> </i></a></li>
 						<li><a class= "nav-link" href="#dogs"><i class="fas fa-dog"> <span> Doggos </span> </i></a></li>
 						<li><a class= "nav-link" href="#cats"><i class="fas fa-cat"> <span> Cats </span> </i></a></li>
 						<li><a class= "nav-link" href="#camera"><i class="fas fa-camera"> <span> Camera </span> </i></a></li>
@@ -170,16 +221,18 @@ images=data;
 	
      <div class= "pictures" id="emoji"></div>
 	 
-	   <div class="content" align="center" id="home">
-	        <button style="margin-top: 25px;"id="search" class="btn btn-primary btn-xl text-uppercase">Search</button>
+	   <div class="content" align="center" id="home"> 
+	   <h1> Hello Sad Person and Feel Free to Click the Icons <br> Down Below for Some Juicy Pictures OwO</h1>
 	</div>
 	
 	<div class= "content" id="dogs"> 
 	<h1> Oh hey there bark bark </h1>
+		<button style="margin-top: 25px;" id="search" class="btn btn-primary btn-xl text-uppercase">Search</button>
 	</div>
 	
 	<div class= "content" id="cats"> 
 	<h1> Oh hey there meow meow </h1>
+	<button style="margin-top: 25px;" id="search2" class="btn btn-primary btn-xl">Search</button>
 	</div>
  </body>
 </html>
