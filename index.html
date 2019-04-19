@@ -123,8 +123,8 @@ images=data;
   Object.keys(data).forEach((key) => {
     var ele = document.createElement("span");
     var img = document.createElement("img");
+  //  img.setAttribute("class", "col-md-6", "center);
     img.setAttribute("src", data[key]);
-  //  img.setAttribute("class", "col-md-6");
     img.setAttribute("id", "pic");
     ele.appendChild(img);
     var elem=document.getElementById('dogs').appendChild(ele);
@@ -159,8 +159,13 @@ images=data;
           var target = $(this).attr("href");
           $(target).show();
     });
+	
+	$(window).scroll(function() {
+    if($(window).scrollTop() == $(document).height() - $(window).height()) {
+           // ajax call get data from server and append to the div
+
+	
 	$("#search2").on("click", function() {
-		console.log("Search 2 was Clicked");
 	// $("#dogs").empty();  no content for dog yet
 
 var images={};
@@ -180,7 +185,7 @@ images=data;
   });
 })
 .catch(err => console.error(err));
-    $("#cats").empty();
+    $(".h1text").empty();
     setTimeout(function(){
      Object.keys(images).forEach((key) => {
      if(images[key].indexOf(searchTxt)!=-1){
@@ -192,6 +197,8 @@ images=data;
      }
   });
    },0);
+});
+    }
 });
 });
 </script>
@@ -231,7 +238,9 @@ images=data;
 	</div>
 	
 	<div class= "content" id="cats"> 
+		<div class="h1text">
 	<h1> Oh hey there meow meow </h1>
+		</div>
 	<button style="margin-top: 25px;" id="search2" class="btn btn-primary btn-xl">Search</button>
 	</div>
  </body>
