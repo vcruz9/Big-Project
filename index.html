@@ -96,8 +96,8 @@
      </style>
  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
  
+ <!-- DogScript-->
  <script>
-
 $(document).ready(function(){
 	$("#home").show();
 	
@@ -131,7 +131,7 @@ images=data;
   });
 })
 .catch(err => console.error(err));
-    $("#dogs").empty();
+    $(".h2text").empty();
     setTimeout(function(){
      Object.keys(images).forEach((key) => {
      if(images[key].indexOf(searchTxt)!=-1){
@@ -143,6 +143,42 @@ images=data;
      }
   });
    },0);
+   
+	$(window).scroll(function() {
+    if($(window).scrollTop() == $(document).height() - $(window).height()) {
+	// ajax call get data from server and append to the div
+
+var images={};
+var corsAnywhere = 'https://cors-anywhere.herokuapp.com/';
+fetch( corsAnywhere + 'http://shibe.online/api/shibes?count=6&urls=true&httpsUrls=true')
+.then(response => response.json())
+.then(data => {
+images=data;
+  Object.keys(data).forEach((key) => {
+    var ele = document.createElement("span");
+    var img = document.createElement("img");
+    img.setAttribute("src", data[key]);
+  //  img.setAttribute("class", "col-md-6");
+    img.setAttribute("id", "pic");
+    ele.appendChild(img);
+    var elem = document.getElementById('dogs').appendChild(ele);
+  });
+})
+.catch(err => console.error(err));
+    $(".h2text").empty();
+    setTimeout(function(){
+     Object.keys(images).forEach((key) => {
+     if(images[key].indexOf(searchTxt)!=-1){
+        var ele = document.createElement("span");
+        var img = document.createElement("img");
+        img.setAttribute("src", images[key]);
+        ele.appendChild(img);
+        var elem=document.getElementById('dogs').appendChild(ele);
+     }
+  });
+   },0);
+   }
+   });
 });
 });
  </script>
@@ -160,13 +196,41 @@ images=data;
           $(target).show();
     });
 	
+	$("#search2").on("click", function() {
+	
+var images={};
+var corsAnywhere = 'https://cors-anywhere.herokuapp.com/';
+fetch( corsAnywhere + 'http://shibe.online/api/cats?count=6&urls=true&httpsUrls=true')
+.then(response => response.json())
+.then(data => {
+images=data;
+  Object.keys(data).forEach((key) => {
+    var ele = document.createElement("span");
+    var img = document.createElement("img");
+    img.setAttribute("src", data[key]);
+  //  img.setAttribute("class", "col-md-6");
+    img.setAttribute("id", "pic");
+    ele.appendChild(img);
+    var elem = document.getElementById('cats').appendChild(ele);
+  });
+})
+.catch(err => console.error(err));
+    $(".h1text").empty();
+    setTimeout(function(){
+     Object.keys(images).forEach((key) => {
+     if(images[key].indexOf(searchTxt)!=-1){
+        var ele = document.createElement("span");
+        var img = document.createElement("img");
+        img.setAttribute("src", images[key]);
+        ele.appendChild(img);
+        var elem=document.getElementById('cats').appendChild(ele);
+     }
+  });
+   },0);
+
 	$(window).scroll(function() {
     if($(window).scrollTop() == $(document).height() - $(window).height()) {
-           // ajax call get data from server and append to the div
-
-	
-	$("#search2").on("click", function() {
-	// $("#dogs").empty();  no content for dog yet
+	// ajax call get data from server and append to the div
 
 var images={};
 var corsAnywhere = 'https://cors-anywhere.herokuapp.com/';
@@ -197,8 +261,8 @@ images=data;
      }
   });
    },0);
-});
-    }
+   }
+   });
 });
 });
 </script>
@@ -219,7 +283,7 @@ images=data;
                 <li class="active"><a class= "nav-link" href="#home"><i class="fas fa-home"><span> Home</span> </i></a></li>
 						<li><a class= "nav-link" href="#dogs"><i class="fas fa-dog"> <span> Doggos </span> </i></a></li>
 						<li><a class= "nav-link" href="#cats"><i class="fas fa-cat"> <span> Cats </span> </i></a></li>
-						<li><a class= "nav-link" href="#camera"><i class="fas fa-camera"> <span> Camera </span> </i></a></li>
+						<li><a class= "nav-link" href="#camera"><i class="fas fa-map-marker-alt	"> <span> Adoption </span> </i></a></li>
                 </li>
             </ul>
         </div>
@@ -233,7 +297,9 @@ images=data;
 	</div>
 	
 	<div class= "content" id="dogs"> 
+		<div class="h2text">
 	<h1> Oh hey there bark bark </h1>
+	</div>
 		<button style="margin-top: 25px;" id="search" class="btn btn-primary btn-xl text-uppercase">Search</button>
 	</div>
 	
