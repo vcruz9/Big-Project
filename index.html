@@ -1,329 +1,445 @@
 <!DOCTYPE html>
 <html>
-<head> 
-	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-	<meta name="theme-color" content="#a29cd9" />
-	<!-- <link rel="stylesheet" type="text/css" href="styles.css"> -->
-	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-</head>
+    <head> 
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <meta name="theme-color" content="#a29cd9" />
+		<link rel='manifest' href='./manifest.json'>
+        <!-- <link rel="stylesheet" type="text/css" href="styles.css"> -->
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+        <!-- Material Design -->
+        <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+        <script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+        <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.cyan-light_blue.min.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    </head>
 
-<style>
-.pictures, .content{
-			display: none;
+    <style>
+        .pictures, .content{
+            display: none;
+        }
+        body {
+            background-image: url("background.png");
+            background-size: 1950px 1075px;
+            margin: 0px;
+        }
+        ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+        nav {
+            background-color: #ffff30;
+        }
+        nav.bot{
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+        #navfooter li{
+            display: inline !important;
+            float: left;
+            width: 25%;
+            text-align: center;
+            padding: 3px 0 0 0;
+            transition: all 0.3s ease;
+            font-size: 50px;
+            text-decoration: none;
+        }
+        #navfooter a {
+            color: black;
+        }
+        #navfooter li:hover {
+            background-color: #ffff30;
+        }
+        .active {
+            background-color: #a6edbe;
+        }
+        #navfooter a span{
+            color:black;
+            font-size:20px;
+            padding:5px 0 5px 0;
+            display:block;
+            text-transform:none;
+            font-family:'Comic Sans MS';
+            letter-spacing:1px;
+        }
+        h1 {
+            font-family: Comic Sans MS;
+            font-size: 40px;
+        }
+        #pic{
+            width: 50%;
+            margin: 20px;
+            padding: 20px;
+            display: block;
+
+        }
+
+        .header {
+            overflow: hidden;
+            background-color: #51c8ff;
+            <!--padding: 20px 10px;-->
+        }
+        .header img {
+            width: 50%;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            height: 100px;
+        }
+		#loading-image {
+		padding-bottom: 200px;
 		}
-	body {
-		background-image: url("background2.png");
-		background-size: contain;
-		margin: 0px;
-		padding-bottom: 70px;
-	 }
-	 
-	 
-	ul {
-		list-style-type: none;
-		margin: 0;
-		padding: 0;
-	}
+        @media only screen and (max-width: 600px) {
+            #navfooter a span{
+                font-size:16px;
+            }
+            body {
+                background-image: url("background.png");
+                background-size: 420px 820px;
+            }
+            h1 {
+                font-size: 18px;
+            }
+        }
+        #map {
+            height: 400px;;  /* The height is 400 pixels */
+            width: 100%;  /* The width is the width of the web page */
+        }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
-	nav {
-		background-color: #ffff30;
-	 }
-	 
-	 nav.bot{
-	 position: fixed;
-	 bottom: 0;
-	 width: 100%;
-	 }
-	#navfooter li{
-		display: inline !important;
-		float: left;
-		width: 25%;
-		text-align: center;
-		padding: 3px 0 0 0;
-		transition: all 0.3s ease;
-		font-size: 50px;
-		text-decoration: none;
-			}
-	#navfooter a {
-	color: black;
-	}
-	#navfooter li:hover {
-	background-color: #ffff30;
-	}
-	.active {
-		background-color: #a6edbe;
-	}
-	#navfooter a span{
-		color:black;
-		font-size:20px;
-		padding:5px 0 5px 0;
-		display:block;
-		text-transform:none;
-		font-family:'Comic Sans MS';
-		letter-spacing:1px;
-	}
+    <!-- DogScript-->
+    <script>
+        $(document).ready(function(){
+            $("#home").show();
+
+            function hideScreens() {
+                $(".content").hide();
+            }
+            $(".nav-link").on("click", function(){
+                hideScreens();
+                var target = $(this).attr("href");
+                $(target).show();
+            });
 
 
-	
+            $("#search").on("click", function() {
+                // $("#dogs").empty();  no content for dog yet
+                $("#loading-image").show();
+                var images={};
+                var corsAnywhere = 'https://cors-anywhere.herokuapp.com/';
+                fetch( corsAnywhere + 'http://shibe.online/api/shibes?count=6&urls=true&httpsUrls=true')
+                    .then(response => response.json())
+                    .then(data => {
+                    images=data;
+                    Object.keys(data).forEach((key) => {
+                        var ele = document.createElement("span");
+                        var img = document.createElement("img");
+                        //  img.setAttribute("class", "col-md-6", "center);
+                        img.setAttribute("src", data[key]);
+                        img.setAttribute("id", "pic");
+                        ele.appendChild(img);
+                        var elem=document.getElementById('dogs').appendChild(ele);
+                    });
+                })
+                    .catch(err => console.error(err));
+                $(".h2text").empty();
+                setTimeout(function(){
+                    Object.keys(images).forEach((key) => {
+                        if(images[key].indexOf(searchTxt)!=-1){
+                            var ele = document.createElement("span");
+                            var img = document.createElement("img");
+                            img.setAttribute("src", images[key]);
+                            ele.appendChild(img);
+                            var elem=document.getElementById('dogs').appendChild(ele);
+                        }
+                    });
+                },0);
 
-         #pic{
-             width: 50%;
-             margin: 20px;
-             padding: 20px;
-             display: block;
-            
-         }
-		 .header {
-		   overflow: hidden;
-			background-color: #df6300;
-			<!--padding: 20px 10px;-->
-			}
-			.header p {
-			  color: white;
-			  text-align: center;
-			  padding: 12px;
-			  text-decoration: none;
-			  font-size: 18px; 
-			  line-height: 25px;
-			  font-family: Comic Sans MS;
-			}
-	@media only screen and (max-width: 600px) {
-		#navfooter a span{
-		font-size:16px;
-		}
-	}
-     </style>
- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
- 
- <!-- DogScript-->
- <script>
-$(document).ready(function(){
-	$("#home").show();
-	
-	 function hideScreens() {
-          $(".content").hide();
-    }
-	$(".nav-link").on("click", function(){
-          hideScreens();
-          var target = $(this).attr("href");
-          $(target).show();
-    });
-	
-     
-	$("#search").on("click", function() {
-	// $("#dogs").empty();  no content for dog yet
-$("#loading-image").show();
-var images={};
-var corsAnywhere = 'https://cors-anywhere.herokuapp.com/';
-fetch( corsAnywhere + 'http://shibe.online/api/shibes?count=6&urls=true&httpsUrls=true')
-.then(response => response.json())
-.then(data => {
-images=data;
-  Object.keys(data).forEach((key) => {
-    var ele = document.createElement("span");
-    var img = document.createElement("img");
-  //  img.setAttribute("class", "col-md-6", "center);
-    img.setAttribute("src", data[key]);
-    img.setAttribute("id", "pic");
-    ele.appendChild(img);
-    var elem=document.getElementById('dogs').appendChild(ele);
-  });
-})
-.catch(err => console.error(err));
-    $(".h2text").empty();
-    setTimeout(function(){
-     Object.keys(images).forEach((key) => {
-     if(images[key].indexOf(searchTxt)!=-1){
-        var ele = document.createElement("span");
-        var img = document.createElement("img");
-        img.setAttribute("src", images[key]);
-        ele.appendChild(img);
-        var elem=document.getElementById('dogs').appendChild(ele);
-     }
-  });
-   },0);
-   
-	$(window).scroll(function() {
-    if($(window).scrollTop() == $(document).height() - $(window).height()) {
-	// ajax call get data from server and append to the div
+                $(window).scroll(function() {
+                    if($(window).scrollTop() == $(document).height() - $(window).height()) {
+                        // ajax call get data from server and append to the div
 
-var images={};
-var corsAnywhere = 'https://cors-anywhere.herokuapp.com/';
-fetch( corsAnywhere + 'http://shibe.online/api/shibes?count=6&urls=true&httpsUrls=true')
-.then(response => response.json())
-.then(data => {
-images=data;
-  Object.keys(data).forEach((key) => {
-    var ele = document.createElement("span");
-    var img = document.createElement("img");
-    img.setAttribute("src", data[key]);
-  //  img.setAttribute("class", "col-md-6");
-    img.setAttribute("id", "pic");
-    ele.appendChild(img);
-    var elem = document.getElementById('dogs').appendChild(ele);
-  });
-})
-.catch(err => console.error(err));
-    $(".h2text").empty();
-    setTimeout(function(){
-     Object.keys(images).forEach((key) => {
-     if(images[key].indexOf(searchTxt)!=-1){
-        var ele = document.createElement("span");
-        var img = document.createElement("img");
-        img.setAttribute("src", images[key]);
-        ele.appendChild(img);
-        var elem=document.getElementById('dogs').appendChild(ele);
-     }
-  });
-   },0);
-   }
-   });
-});
-});
- </script>
-   <!--CatScript-->
-   <script>
-   $(document).ready(function(){
-	$("#home").show();
-	
-	 function hideScreens() {
-          $(".content").hide();
-    }
-	$(".nav-link").on("click", function(){
-          hideScreens();
-          var target = $(this).attr("href");
-          $(target).show();
-    });
-	
-	$("#search2").on("click", function() {
-	
-var images={};
-var corsAnywhere = 'https://cors-anywhere.herokuapp.com/';
-fetch( corsAnywhere + 'http://shibe.online/api/cats?count=6&urls=true&httpsUrls=true')
-.then(response => response.json())
-.then(data => {
-images=data;
-  Object.keys(data).forEach((key) => {
-    var ele = document.createElement("span");
-    var img = document.createElement("img");
-    img.setAttribute("src", data[key]);
-  //  img.setAttribute("class", "col-md-6");
-    img.setAttribute("id", "pic");
-    ele.appendChild(img);
-    var elem = document.getElementById('cats').appendChild(ele);
-  });
-})
-.catch(err => console.error(err));
-    $(".h1text").empty();
-    setTimeout(function(){
-     Object.keys(images).forEach((key) => {
-     if(images[key].indexOf(searchTxt)!=-1){
-        var ele = document.createElement("span");
-        var img = document.createElement("img");
-        img.setAttribute("src", images[key]);
-        ele.appendChild(img);
-        var elem=document.getElementById('cats').appendChild(ele);
-     }
-  });
-   },0);
+                        var images={};
+                        var corsAnywhere = 'https://cors-anywhere.herokuapp.com/';
+                        fetch( corsAnywhere + 'http://shibe.online/api/shibes?count=6&urls=true&httpsUrls=true')
+                            .then(response => response.json())
+                            .then(data => {
+                            images=data;
+                            Object.keys(data).forEach((key) => {
+                                var ele = document.createElement("span");
+                                var img = document.createElement("img");
+                                img.setAttribute("src", data[key]);
+                                //  img.setAttribute("class", "col-md-6");
+                                img.setAttribute("id", "pic");
+                                ele.appendChild(img);
+                                var elem = document.getElementById('dogs').appendChild(ele);
+                            });
+                        })
+                            .catch(err => console.error(err));
+                        $(".h2text").empty();
+                        setTimeout(function(){
+                            Object.keys(images).forEach((key) => {
+                                if(images[key].indexOf(searchTxt)!=-1){
+                                    var ele = document.createElement("span");
+                                    var img = document.createElement("img");
+                                    img.setAttribute("src", images[key]);
+                                    ele.appendChild(img);
+                                    var elem=document.getElementById('dogs').appendChild(ele);
+                                }
+                            });
+                        },0);
+                    }
+                });
+            });
+        });
+    </script>
+    <!--CatScript-->
+    <script>
+        $(document).ready(function(){
+            $("#home").show();
 
-	$(window).scroll(function() {
-    if($(window).scrollTop() == $(document).height() - $(window).height()) {
-	// ajax call get data from server and append to the div
+            function hideScreens() {
+                $(".content").hide();
+            }
+            $(".nav-link").on("click", function(){
+                hideScreens();
+                var target = $(this).attr("href");
+                $(target).show();
+            });
 
-var images={};
-var corsAnywhere = 'https://cors-anywhere.herokuapp.com/';
-fetch( corsAnywhere + 'http://shibe.online/api/cats?count=6&urls=true&httpsUrls=true')
-.then(response => response.json())
-.then(data => {
-images=data;
-  Object.keys(data).forEach((key) => {
-    var ele = document.createElement("span");
-    var img = document.createElement("img");
-    img.setAttribute("src", data[key]);
-  //  img.setAttribute("class", "col-md-6");
-    img.setAttribute("id", "pic");
-    ele.appendChild(img);
-    var elem = document.getElementById('cats').appendChild(ele);
-  });
-})
-.catch(err => console.error(err));
-    $(".h1text").empty();
-    setTimeout(function(){
-     Object.keys(images).forEach((key) => {
-     if(images[key].indexOf(searchTxt)!=-1){
-        var ele = document.createElement("span");
-        var img = document.createElement("img");
-        img.setAttribute("src", images[key]);
-        ele.appendChild(img);
-        var elem=document.getElementById('cats').appendChild(ele);
-     }
-  });
-   },0);
-   }
-   });
-});
-});
-</script>
+            $("#search2").on("click", function() {
+                $("#loading-image").show();	
+                var images={};
+                var corsAnywhere = 'https://cors-anywhere.herokuapp.com/';
+                fetch( corsAnywhere + 'http://shibe.online/api/cats?count=6&urls=true&httpsUrls=true')
+                    .then(response => response.json())
+                    .then(data => {
+                    images=data;
+                    Object.keys(data).forEach((key) => {
+                        var ele = document.createElement("span");
+                        var img = document.createElement("img");
+                        img.setAttribute("src", data[key]);
+                        //  img.setAttribute("class", "col-md-6");
+                        img.setAttribute("id", "pic");
+                        ele.appendChild(img);
+                        var elem = document.getElementById('cats').appendChild(ele);
+                    });
+                })
+                    .catch(err => console.error(err));
+                $(".h1text").empty();
+                setTimeout(function(){
+                    Object.keys(images).forEach((key) => {
+                        if(images[key].indexOf(searchTxt)!=-1){
+                            var ele = document.createElement("span");
+                            var img = document.createElement("img");
+                            img.setAttribute("src", images[key]);
+                            ele.appendChild(img);
+                            var elem=document.getElementById('cats').appendChild(ele);
+                        }
+                    });
+                },0);
 
- <body>
- <!--NavBarTop-->
-	<div class="header">
-        <p class="logo">Pics For Tears</p>
-    </div>
+                $(window).scroll(function() {
+                    if($(window).scrollTop() == $(document).height() - $(window).height()) {
+                        // ajax call get data from server and append to the div
 
-<!-- IconWorking
+                        var images={};
+                        var corsAnywhere = 'https://cors-anywhere.herokuapp.com/';
+                        fetch( corsAnywhere + 'http://shibe.online/api/cats?count=6&urls=true&httpsUrls=true')
+                            .then(response => response.json())
+                            .then(data => {
+                            images=data;
+                            Object.keys(data).forEach((key) => {
+                                var ele = document.createElement("span");
+                                var img = document.createElement("img");
+                                img.setAttribute("src", data[key]);
+                                //  img.setAttribute("class", "col-md-6");
+                                img.setAttribute("id", "pic");
+                                ele.appendChild(img);
+                                var elem = document.getElementById('cats').appendChild(ele);
+                            });
+                        })
+                            .catch(err => console.error(err));
+                        $(".h1text").empty();
+                        setTimeout(function(){
+                            Object.keys(images).forEach((key) => {
+                                if(images[key].indexOf(searchTxt)!=-1){
+                                    var ele = document.createElement("span");
+                                    var img = document.createElement("img");
+                                    img.setAttribute("src", images[key]);
+                                    ele.appendChild(img);
+                                    var elem=document.getElementById('cats').appendChild(ele);
+                                }
+                            });
+                        },0);
+                    }
+                });
+            });
+        });
+    </script>
+
+    <body>
+        <!--NavBarTop-->
+        <div class="header">
+            <img src="logo.png" alt="logo" />
+        </div>
+
+        <!-- IconWorking
 <div class="icon-dog"”></div> -->
 
- <!-- NavBarBottom-->
-    <nav class="bot">
-        <div class="navbar" id="navbarNav">
-            <ul class="navbar-nav" id="navfooter">
-                <li class="active"><a class= "nav-link" href="#home"><i class="fas fa-home"><span> Home</span> </i></a></li>
-						<li><a class= "nav-link" href="#dogs"><i class="fas fa-dog"> <span> Doggos </span> </i></a></li>
-						<li><a class= "nav-link" href="#cats"><i class="fas fa-cat"> <span> Cats </span> </i></a></li>
-						<li><a class= "nav-link" href="#camera"><i class="fas fa-map-marker-alt	"> <span> Adoption </span> </i></a></li>
-                </li>
-            </ul>
+        <!-- NavBarBottom-->
+        <nav class="bot">
+            <div class="navbar" id="navbarNav">
+                <ul class="navbar-nav" id="navfooter">
+                    <li class="active"><a class= "nav-link" href="#home"><i class="fas fa-home"><span> Home</span> </i></a></li>
+                    <li><a class= "nav-link" href="#dogs"><i class="fas fa-dog"> <span> Doggos </span> </i></a></li>
+                    <li><a class= "nav-link" href="#cats"><i class="fas fa-cat"> <span> Cats </span> </i></a></li>
+                    <li><a class= "nav-link" href="#map"><i class="fas fa-map-marker-alt	"> <span> Pet Stores </span> </i></a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <!--HomePage-->
+        <div class="content" align="center" id="home"> 
+            <h1> Turn that frown upside down! :)<br> Down below you can click the icons for dog pictures, cat pictures, or local pet shops near you to make the photos a reality! UwU</h1>
         </div>
-    </nav>
 
-	
-     <div class= "pictures" id="emoji"></div>
-	 
-	   <div class="content" align="center" id="home"> 
-	   <h1> Hello Sad Person and Feel Free to Click the Icons <br> Down Below for Some Juicy Pictures OwO</h1>
-	</div>
-	
-	<div class= "content" id="dogs"> 
-		<div class="h2text">
-	<h1> Oh hey there bark bark </h1>
-	</div>
-		<button style="margin-top: 25px;" id="search" class="btn btn-primary btn-xl text-uppercase">Search</button>
-	</div>
-	
-	<div class= "content" id="cats"> 
-		<div class="h1text">
-	<h1> Oh hey there meow meow </h1>
-		</div>
-	<button style="margin-top: 25px;" id="search2" class="btn btn-primary btn-xl">Search</button>
-	</div>
-	
-	<div class= "content" id= "loading-image">
-	<img src= "cat.gif" height= "200"> 
-	</div> 
- </body>
- 
- <!-- Loading Image-->
- <script>
-$(document).ajaxStart(function() {
-  $("#loading-image").show();
-});
 
-$(document).ajaxStop(function() {
-  $("#loading-image").hide();
-});
-</script>
+        <!--Dog Page-->
+        <div class= "content" id="dogs" style= "align-items: center"> 
+            <div class="h2text">
+                <h1> Oh hey there bark bark </h1>
+            </div>
+            <a id="search" class="mdl-navigation__link" style="margin-top: 25px; margin-left: 15px;"><i class="material-icons" role="presentation">search</i>Click this button</a>
+        </div>
+
+        <!--Cat Page-->
+        <div class= "content" id="cats"> 
+            <div class="h1text">
+                <h1> Oh hey there meow meow </h1>
+            </div>
+            <a id="search2" class="mdl-navigation__link" style="margin-top: 25px; margin-left: 15px;"><i class="material-icons" role="presentation">search</i> Click this button</a>
+        </div>
+
+        <!--Map Page--> 
+        <div class= "content" id= "map">
+
+        </div>
+
+
+
+        <!--Loading Image-->
+        <div class= "content" id= "loading-image">
+            <img src= "cat.gif" height= "200"> 
+        </div> 
+    </body>
+
+    <!-- Loading Image Script-->
+    <script>
+        $(document).ajaxStart(function() {
+            $("#loading-image").show();
+        });
+
+        $(document).ajaxStop(function() {
+            $("#loading-image").hide();
+        });
+    </script>
+
+    <!--GoogleMapsKey-->
+    <script>
+        //Initialize and add the map
+        function initMap() {
+            // The location of Chicago
+            var uluru = {lat: 41.8781, lng: -87.6298};
+            // The map, centered at Chicago
+            var map = new google.maps.Map(
+                document.getElementById('map'), {zoom: 13, center: uluru});
+            // The marker, positioned at Chicago
+            infoWindow = new google.maps.InfoWindow;
+
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    var pos = {
+                        lat: position.coords.latitude,
+                        lng: position.coords.longitude
+                    };
+                    infoWindow.setPosition(pos);
+                    infoWindow.setContent('Current Location');
+                    infoWindow.open(map);
+                    var request = {
+                        location: pos,
+                        radius: '500',
+                        query: 'pet store'
+                    };
+
+                    service = new google.maps.places.PlacesService(map);
+                    service.textSearch(request, callback);
+                    function callback(results, status) {
+                        if (status == google.maps.places.PlacesServiceStatus.OK) {
+                            for (var i = 0; i < results.length; i++) {
+                                var place = results[i];
+                                createMarkers(results);
+                                //console.log(results[i]);
+                            }
+                        }
+                    }
+                    function createMarkers(places) {
+                        var bounds = new google.maps.LatLngBounds();
+                        var placesList = document.getElementById('places');
+
+                        for (var i = 0, place; place = places[i]; i++) {
+
+                            var marker = new google.maps.Marker({
+                                map: map,
+                                title: place.name,
+                                position: place.geometry.location
+                            });
+                            bounds.extend(place.geometry.location);
+                        }
+                        map.fitBounds(bounds);
+                        map.setCenter(pos);
+                        map.setZoom(13);
+                    }
+
+                }, function() {
+                    handleLocationError(true, infoWindow, map.getCenter());
+                });
+            } else {
+                // Browser doesn't support Geolocation
+                handleLocationError(false, infoWindow, map.getCenter());
+            }
+        }
+    </script>
+
+    <script src="https://unpkg.com/dexie@latest/dist/dexie.js"></script>
+    <script>
+        //Index Database using Dexie
+        db = new Dexie("log_db");
+        db.version(1).stores({
+            log_db: "++id, date"
+        });
+        $(document).ready(function(){
+            db.log_db.put({date: new Date()}); //Stores Date into index db
+        });
+    </script>
+
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCsmyrEvpVzsnsrMvCjsPRxGzgWf6qbgQo&libraries=places&callback=initMap"></script>
+	
+	   <!-- Service Worker -->  
+    <script>
+        // register the service worker for offline use
+        if('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('./sw.js').then(function() { 
+            //Registeration success
+            console.log("Service Worker Registered"); 
+        }, function(err) {
+            // registration failed :(
+            console.log('ServiceWorker registration failed: ', err);
+    });
+        }
+    </script>
 </html>

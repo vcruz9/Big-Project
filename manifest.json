@@ -1,0 +1,14 @@
+{
+  "name": "Pics For Tears,
+  "short_name": "PFT",
+  "icons": [ {
+        "src": "App.png,
+        "type": "image/png",
+        "sizes": "144x144"
+      }],
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "white",
+  "theme_color": "white"
+}
