@@ -2,7 +2,7 @@
   "name": "Pics For Tears",
   "short_name": "PFT",
   "icons": [ {
-        "src": "App.png,
+        "src": "App.png",
         "type": "image/png",
         "sizes": "144x144"
       }],
